@@ -1,0 +1,16 @@
+{
+  "bitwise": true,
+  "eqeqeq": false,
+  "esversion": 6,
+  "forin": false,
+  "freeze": false,
+  "futurehostile": true,
+  "latedef": false,
+  "maxcomplexity": false,
+  "nonbsp": true,
+  "nonew": true,
+  "shadow": "inner",
+  "singleGroups": false,
+  "strict": "global",
+  "unused": false
+}
