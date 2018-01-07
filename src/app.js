@@ -3,12 +3,6 @@ let width = 960,
   height = 500,
   centered;
 
-// Define color scale
-let color = d3.scale.linear()
-  .domain([1, 20])
-  .clamp(true)
-  .range(['#fff', '#409A99']);
-
 let projection = d3.geo.mercator()
   .scale(150000)
   .center([-122.45, 37.75])
@@ -17,12 +11,10 @@ let projection = d3.geo.mercator()
 let path = d3.geo.path()
   .projection(projection);
 
-// Set svg width & height
 let svg = d3.select('svg')
   .attr('width', width)
   .attr('height', height);
 
-// Add background
 svg.append('rect')
   .attr('class', 'background')
   .attr('width', width)
@@ -31,45 +23,65 @@ svg.append('rect')
 
 let g = svg.append('g');
 
-let effectLayer = g.append('g')
-  .classed('effect-layer', true);
-
 let mapLayer = g.append('g')
   .classed('map-layer', true);
 
-// Load map data
+let streetLayer = g.append('g')
+  .classed('street-layer', true);
+
+let arteryLayer = g.append('g')
+  .classed('artery-layer', true);
+
+let freewayLayer = g.append('g')
+  .classed('freeway-layer', true);
+
 d3.json('data/neighborhoods.json', function(error, mapData) {
   let features = mapData.features;
 
-  // Update color scale domain based on data
-  color.domain([0, d3.max(features, nameLength)]);
-
-  // Draw each province as a path
   mapLayer.selectAll('path')
     .data(features)
     .enter().append('path')
     .attr('d', path)
     .attr('vector-effect', 'non-scaling-stroke')
-    .style('fill', fillFn)
+    .style('fill', '#073642')
     .on('mouseover', mouseover)
     .on('mouseout', mouseout)
     .on('click', clicked);
 });
 
-// Get province name
+d3.json('data/freeways.json', function (error, mapData) {
+  freewayLayer.selectAll('path')
+    .data(mapData.features)
+    .enter().append('path')
+    .attr('d', path)
+    .style('fill', "none")
+    .style('stroke-width', "1.5")
+    .style('stroke', "#b58900")
+});
+
+d3.json('data/arteries.json', function (error, mapData) {
+  arteryLayer.selectAll('path')
+    .data(mapData.features)
+    .enter().append('path')
+    .attr('d', path)
+    .style('fill', "none")
+    .style('stroke-width', "1")
+    .style('stroke', "#b58900")
+});
+
+d3.json('data/streets.json', function (error, mapData) {
+  console.log(mapData);
+  streetLayer.selectAll('path')
+    .data(mapData.features)
+    .enter().append('path')
+    .attr('d', path)
+    .style('fill', "none")
+    .style('stroke-width', "0.5")
+    .style('stroke', "#586e75")
+});
+
 function nameFn(d){
-  return d && d.properties ? d.properties.NOMBRE_DPT : null;
-}
-
-// Get province name length
-function nameLength(d){
-  let n = nameFn(d);
-  return n ? n.length : 0;
-}
-
-// Get province color
-function fillFn(d){
-  return color(nameLength(d));
+  return d && d.properties ? d.properties.neighborho : null;
 }
 
 function clicked(d) {
@@ -89,7 +101,7 @@ function clicked(d) {
   }
 
   mapLayer.selectAll('path')
-    .style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
+    .style('fill', d => centered && d===centered ? '#074F5A' : "#073642");
 
   g.transition()
     .duration(750)
@@ -97,12 +109,10 @@ function clicked(d) {
 }
 
 function mouseover(d){
-  // Highlight hovered province
-  d3.select(this).style('fill', 'orange');
+  d3.select(this).style('fill', '#b58900');
 }
 
 function mouseout(d){
-  // Reset province color
   mapLayer.selectAll('path')
-    .style('fill', function(d){return centered && d===centered ? '#D5708B' : fillFn(d);});
+    .style('fill', function(d){return centered && d===centered ? '#074F5A' : "#073642";});
 }
