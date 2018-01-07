@@ -1,10 +1,11 @@
+let routes = [];
 
-let width = 960,
-  height = 500,
+let width = 1920,
+  height = 1080,
   centered;
 
 let projection = d3.geo.mercator()
-  .scale(150000)
+  .scale(250000)
   .center([-122.45, 37.75])
   .translate([width / 2, height / 2]);
 
@@ -56,7 +57,7 @@ d3.json('data/freeways.json', function (error, mapData) {
     .attr('d', path)
     .style('fill', "none")
     .style('stroke-width', "1.5")
-    .style('stroke', "#b58900")
+    .style('stroke', "#b58900");
 });
 
 d3.json('data/arteries.json', function (error, mapData) {
@@ -66,18 +67,17 @@ d3.json('data/arteries.json', function (error, mapData) {
     .attr('d', path)
     .style('fill', "none")
     .style('stroke-width', "1")
-    .style('stroke', "#b58900")
+    .style('stroke', "#b58900");
 });
 
 d3.json('data/streets.json', function (error, mapData) {
-  console.log(mapData);
   streetLayer.selectAll('path')
     .data(mapData.features)
     .enter().append('path')
     .attr('d', path)
     .style('fill', "none")
     .style('stroke-width', "0.5")
-    .style('stroke', "#586e75")
+    .style('stroke', "#586e75");
 });
 
 function nameFn(d){
@@ -116,3 +116,20 @@ function mouseout(d){
   mapLayer.selectAll('path')
     .style('fill', function(d){return centered && d===centered ? '#074F5A' : "#073642";});
 }
+
+function getRoutes() {
+  return axios.get('http://webservices.nextbus.com/service/publicJSONFeed?command=routeList&a=sf-muni').then(routeListResponse => {
+    routes = routeListResponse.data.route;
+    routes.forEach(route => {
+      axios.get('http://webservices.nextbus.com/service/publicJSONFeed?command=routeConfig&a=sf-muni&r=' + route.tag).then(routeConfigResponse => {
+        route.route = routeConfigResponse.data.route;
+      });
+      axios.get('http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&a=sf-muni&t=0&r=' + route.tag).then(vehicleLocationsResponse => {
+        route.vehicles = vehicleLocationsResponse.data.vehicle;
+      });
+    });
+    return routes;
+  });
+}
+
+getRoutes();
