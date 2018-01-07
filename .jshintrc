@@ -11,6 +11,6 @@
   "nonew": true,
   "shadow": "inner",
   "singleGroups": false,
-  "strict": "global",
+  "strict": false,
   "unused": false
 }
