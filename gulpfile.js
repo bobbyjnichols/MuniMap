@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const clean = require('gulp-clean');
 const minimist = require('minimist');
 const merge = require('merge-stream');
+const streamqueue = require('streamqueue');
 const connect = require('gulp-connect');
 const sequence = require('run-sequence');
 
@@ -28,7 +29,39 @@ const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 
 // -----[ Files ]---------------------------------------------------------------
-const js = [];
+const js = [
+  // 'node_modules/d3/build/d3.js',
+  // 'node_modules/d3-array/build/d3-array.js',
+  // 'node_modules/d3-axis/build/d3-axis.js',
+  // 'node_modules/d3-brush/build/d3-brush.js',
+  // 'node_modules/d3-chord/build/d3-chord.js',
+  // 'node_modules/d3-collection/build/d3-collection.js',
+  // 'node_modules/d3-color/build/d3-color.js',
+  // 'node_modules/d3-dispatch/build/d3-dispatch.js',
+  // 'node_modules/d3-drag/build/d3-drag.js',
+  // 'node_modules/d3-dsv/build/d3-dsv.js',
+  // 'node_modules/d3-ease/build/d3-ease.js',
+  // 'node_modules/d3-force/build/d3-force.js',
+  // 'node_modules/d3-format/build/d3-format.js',
+  // 'node_modules/d3-geo/build/d3-geo.js',
+  // 'node_modules/d3-hierarchy/build/d3-hierarchy.js',
+  // 'node_modules/d3-interpolate/build/d3-interpolate.js',
+  // 'node_modules/d3-path/build/d3-path.js',
+  // 'node_modules/d3-polygon/build/d3-polygon.js',
+  // 'node_modules/d3-quadtree/build/d3-quadtree.js',
+  // 'node_modules/d3-queue/build/d3-queue.js',
+  // 'node_modules/d3-random/build/d3-random.js',
+  // 'node_modules/d3-request/build/d3-request.js',
+  // 'node_modules/d3-scale/build/d3-scale.js',
+  // 'node_modules/d3-selection/build/d3-selection.js',
+  // 'node_modules/d3-shape/build/d3-shape.js',
+  // 'node_modules/d3-time/build/d3-time.js',
+  // 'node_modules/d3-time-format/build/d3-time-format.js',
+  // 'node_modules/d3-timer/build/d3-timer.js',
+  // 'node_modules/d3-transition/build/d3-transition.js',
+  // 'node_modules/d3-voronoi/build/d3-voronoi.js',
+  // 'node_modules/d3-zoom/build/d3-zoom.js'
+];
 const css = [];
 const fonts = [];
 
@@ -100,12 +133,12 @@ gulp.task('scripts', function () {
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(sourcemaps.init())
-    // .pipe(babel({
-    //   presets: ["es2015"]
-    // }))
+    .pipe(babel({
+      presets: ["es2015"]
+    }))
     .pipe(concat('scripts-B.js'));
 
-  return merge(downloadStream, customStream)
+  return streamqueue({ objectMode: true }, downloadStream, customStream)
     .pipe(concat('scripts.js'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('target/js/'))
@@ -190,14 +223,14 @@ gulp.task('fonts', function () {
 gulp.task('watch', function () {
   gulp.watch(['src/index.html'], ['index:reload']);
   gulp.watch(['src/app/**/*.html'], ['html:reload']);
-  gulp.watch(['src/app.js', 'src/app/**/*.js'], ['scripts', 'docs']);
+  gulp.watch(['src/app.js', 'src/app/**/*.js'], ['scripts']);
   gulp.watch('src/assets/js/compatibility/*', ['compatibility']);
   gulp.watch(['src/app.sass', 'src/app/**/*.sass'], ['style', 'style:reload']);
 });
 
 // -----[ Copy Tasks ]----------------
 gulp.task('copy:assets', function () {
-  return gulp.src(['src/assets/images*/**/*', 'src/assets/favicons*/**/*'])
+  return gulp.src(['src/assets/images*/**/*', 'src/assets/favicons*/**/*', 'src/assets/data*/**/*'])
     .pipe(gulp.dest('target/'));
 });
 
