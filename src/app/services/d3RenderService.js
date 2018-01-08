@@ -77,10 +77,7 @@
           .data(mapData.features)
           .enter().append('path')
           .attr('d', path)
-          .attr('class', 'freeway')
-          .style('fill', "none")
-          .style('stroke-width', "1.5")
-          .style('stroke', "#b58900");
+          .attr('class', 'freeway');
       });
 
       d3.json('data/arteries.json', function (error, mapData) {
@@ -88,10 +85,7 @@
           .data(mapData.features)
           .enter().append('path')
           .attr('d', path)
-          .attr('class', 'artery')
-          .style('fill', "none")
-          .style('stroke-width', "1")
-          .style('stroke', "#b58900");
+          .attr('class', 'artery');
       });
 
       d3.json('data/streets.json', function (error, mapData) {
@@ -99,21 +93,20 @@
           .data(mapData.features)
           .enter().append('path')
           .attr('d', path)
-          .attr('class', 'street')
-          .style('fill', "none")
-          .style('stroke-width', "0.5")
-          .style('stroke', "#586e75");
+          .attr('class', 'street');
       });
     };
 
-    this.initVehicles = function(vehicles, $scope) {
-      self.layers.vehicle.selectAll(".vehicle")
-        .data(vehicles, d => d ? d.id : null)
-        .enter().append("circle", ".vehicle")
+    this.updateVehicles = function (vehicles, $scope) {
+      let data = self.layers.vehicle.selectAll(".vehicle")
+        .data(vehicles, d => d ? d.id : null);
+
+      data.exit().remove();
+
+      data.enter().append("circle", ".vehicle")
         .attr("r", 2.5)
         .attr("class", "vehicle")
         .attr("vehicle-id", d => d ? d.id : null)
-        .attr("data-ng-click", "map.selectVehicle('test')")
         .on('click', d => {
           self.layers.vehicle.selectAll(".vehicle").attr("class", "vehicle");
           self.layers.vehicle.select("[vehicle-id='" + d.id + "']").attr("class", "vehicle selected");
@@ -126,11 +119,8 @@
             parseFloat(d.lat)
           ]) + ")" : null
         );
-    };
 
-    this.updateVehicles = function (vehicles) {
-      self.layers.vehicle.selectAll(".vehicle")
-        .data(vehicles, d => d ? d.id : null)
+       data
         .attr("transform", d => d ?
           "translate(" + projection([
             parseFloat(d.lon),

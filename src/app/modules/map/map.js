@@ -16,7 +16,7 @@
     this.updateVehicles = function () {
       console.log("Update");
       MapService.getVehicles(self.routes).then(vehicles => {
-        d3RenderService.updateVehicles(vehicles);
+        d3RenderService.updateVehicles(vehicles, $scope);
       });
     };
 
@@ -26,7 +26,7 @@
         self.routes = routes;
         MapService.getVehicles(self.routes).then(vehicles => {
           self.vehicles = vehicles;
-          d3RenderService.initVehicles(vehicles, $scope);
+          d3RenderService.updateVehicles(vehicles, $scope);
         });
       });
       $interval(self.updateVehicles, 10000);
