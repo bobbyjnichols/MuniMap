@@ -11,8 +11,6 @@
     this.selectVehicle = function (vehicle) {
       $scope.selectedVehicle = vehicle;
       $scope.selectedRoute = self.getRoute(vehicle.routeTag);
-      console.log(vehicle);
-      console.log($scope.selectedRoute);
     };
 
     this.updateVehicles = function () {

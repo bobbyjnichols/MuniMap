@@ -80,7 +80,7 @@
 
     function mouseout(d){
       mapLayer.selectAll('path')
-        .style('fill', function(d){return centered && d===centered ? '#074F5A' : "#073642";});
+        .style('fill', d => centered && d===centered ? '#074F5A' : "#073642");
     }
 
     this.initMap = function () {
@@ -138,6 +138,8 @@
         .attr("vehicle-id", d => d ? d.id : null)
         .attr("data-ng-click", "map.selectVehicle('test')")
         .on('click', d => {
+          vehicleLayer.selectAll(".vehicle").attr("class", "vehicle");
+          vehicleLayer.select("[vehicle-id='" + d.id + "']").attr("class", "vehicle selected");
           $scope.map.selectVehicle(d);
           $scope.$apply();
         })

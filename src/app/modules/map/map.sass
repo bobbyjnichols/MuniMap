@@ -24,8 +24,28 @@
       fill: #d33682
       transition: 0.25s ease-in-out r, 10s transform
       cursor: pointer
+      stroke: #d33682
+      stroke-width: inherit
+      stroke-opacity: inherit
+
+      @keyframes pulse
+        from
+          r: 3
+          stroke-opacity: 1
+
+        to
+          r: 5
+          stroke-opacity: 0
+
       &:hover
         r: 5
+
+      &+.selected
+        animation-duration: 1s
+        animation-name: pulse
+        animation-iteration-count: infinite
+        stroke: #d33682
+        stroke-width: 2px
 
 .more-info
   position: absolute
