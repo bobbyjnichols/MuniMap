@@ -6,25 +6,29 @@
   z-index: 0
 
   .background
-    fill: #002b36
+    fill: $base03
     pointer-events: all
 
 
   .map-layer
-    fill: #fff
-    stroke: #657b83
+    stroke: $base00
 
     .neighborhood
-      fill: #073642
+      fill: $base02
+      transition: 0.1s fill
+
       &:hover
-        fill: #b58900
+        fill: $yellow
+
+      & + .selected
+        fill: lighten($base02, 5%)
 
   .vehicle-layer
     .vehicle
-      fill: #d33682
+      fill: $magenta
       transition: 0.25s ease-in-out r, 10s transform
       cursor: pointer
-      stroke: #d33682
+      stroke: $magenta
       stroke-width: inherit
       stroke-opacity: inherit
 
@@ -44,7 +48,7 @@
         animation-duration: 1s
         animation-name: pulse
         animation-iteration-count: infinite
-        stroke: #d33682
+        stroke: $magenta
         stroke-width: 2px
 
 .more-info
@@ -52,16 +56,16 @@
   top: 2rem
   left: 2rem
   z-index: 5
-  background: #eee8d5
-  border: 0.2em solid darken(#eee8d5, 25%)
-  color: #657b83
+  background: $base2
+  border: 0.2em solid darken($base2, 25%)
+  color: $base00
   padding: 1em
 
   > *:not(:last-child)
     margin-bottom: 1rem
 
   h1
-    color: #586e75
+    color: $base01
     margin: 0
     padding: 0
 
@@ -71,4 +75,4 @@
 
     .heading-icon
       width: 1em
-      fill: #657b83
+      fill: $base00

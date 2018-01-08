@@ -53,20 +53,11 @@
       }
 
       self.layers.map.selectAll('path')
-        .style('fill', d => centered && d===centered ? '#074F5A' : "#073642");
+        .attr('class', d => centered && d===centered ? 'neighborhood selected' : 'neighborhood');
 
       self.g.transition()
         .duration(750)
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')');
-    }
-
-    function mouseover(d){
-      d3.select("[neighborhood='" + d.properties.neighborho + "']").style('fill', '#b58900');
-    }
-
-    function mouseout(d){
-      self.layers.map.selectAll('path')
-        .style('fill', d => centered && d===centered ? '#074F5A' : "#073642");
     }
 
     this.initMap = function () {
@@ -78,9 +69,6 @@
           .attr('class', 'neighborhood')
           .attr('neighborhood', d => d.properties.neighborho)
           .attr('vector-effect', 'non-scaling-stroke')
-          .style('fill', '#073642')
-          .on('mouseover', mouseover)
-          .on('mouseout', mouseout)
           .on('click', clicked);
       });
 
@@ -89,6 +77,7 @@
           .data(mapData.features)
           .enter().append('path')
           .attr('d', path)
+          .attr('class', 'freeway')
           .style('fill', "none")
           .style('stroke-width', "1.5")
           .style('stroke', "#b58900");
@@ -99,6 +88,7 @@
           .data(mapData.features)
           .enter().append('path')
           .attr('d', path)
+          .attr('class', 'artery')
           .style('fill', "none")
           .style('stroke-width', "1")
           .style('stroke', "#b58900");
@@ -109,6 +99,7 @@
           .data(mapData.features)
           .enter().append('path')
           .attr('d', path)
+          .attr('class', 'street')
           .style('fill', "none")
           .style('stroke-width', "0.5")
           .style('stroke', "#586e75");
