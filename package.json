@@ -41,6 +41,7 @@
   "dependencies": {
     "@uirouter/angularjs": "^1.0.12",
     "angular": "^1.6.8",
+    "angular-animate": "^1.6.8",
     "angular-resource": "^1.6.8",
     "d3": "^4.12.2"
   }

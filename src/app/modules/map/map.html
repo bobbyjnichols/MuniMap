@@ -1,6 +1,6 @@
 <div>
   <svg class="main-canvas"></svg>
-  <div class="more-info" ng-show="selectedVehicle">
+  <div class="more-info" ng-if="selectedVehicle">
     <h1>{{selectedRoute.title}}</h1>
     <ul>
       <li>Vehicle: {{selectedVehicle.id}}</li>

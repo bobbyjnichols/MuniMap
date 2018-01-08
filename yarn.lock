@@ -72,6 +72,10 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular-animate@^1.6.8:
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/angular-animate/-/angular-animate-1.6.8.tgz#f38554c9c68770c9588b39c49920bc24e0d6f98a"
+
 angular-resource@^1.6.8:
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/angular-resource/-/angular-resource-1.6.8.tgz#cc2172f8ec4a3a8340c43c600a5fed543e4168af"

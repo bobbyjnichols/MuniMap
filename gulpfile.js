@@ -33,7 +33,8 @@ const babel = require('gulp-babel');
 const js = [
   'node_modules/angular/angular.js',
   'node_modules/angular-resource/angular-resource.js',
-  'node_modules/@uirouter/angularjs/release/angular-ui-router.js'
+  'node_modules/@uirouter/angularjs/release/angular-ui-router.js',
+  'node_modules/angular-animate/angular-animate.js'
   // 'node_modules/d3/build/d3.js',
   // 'node_modules/d3-array/build/d3-array.js',
   // 'node_modules/d3-axis/build/d3-axis.js',

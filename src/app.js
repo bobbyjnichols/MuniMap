@@ -7,7 +7,8 @@
   angular.module('MuniMap', [
     'ui.router',
     'ngResource',
-    'config'
+    'config',
+    'ngAnimate'
   ])
     .config([
       '$compileProvider',
