@@ -1,0 +1,54 @@
+.main-canvas
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  z-index: 0
+
+  .background
+    fill: #002b36
+    pointer-events: all
+
+
+  .map-layer
+    fill: #fff
+    stroke: #657b83
+
+    .neighborhood
+      fill: #073642
+      &:hover
+        fill: #b58900
+
+  .vehicle-layer
+    .vehicle
+      fill: #d33682
+      transition: 0.25s ease-in-out r, 10s transform
+      cursor: pointer
+      &:hover
+        r: 5
+
+.more-info
+  position: absolute
+  top: 2rem
+  left: 2rem
+  z-index: 5
+  background: #eee8d5
+  border: 0.2em solid darken(#eee8d5, 25%)
+  color: #657b83
+  padding: 1em
+
+  > *:not(:last-child)
+    margin-bottom: 1rem
+
+  h1
+    color: #586e75
+    margin: 0
+    padding: 0
+
+  ul
+    margin: 0
+    padding: 0 0 0 1em
+
+    .heading-icon
+      width: 1em
+      fill: #657b83

@@ -67,7 +67,9 @@ const js = [
   // 'node_modules/d3-zoom/build/d3-zoom.js'
 ];
 const css = [];
-const fonts = [];
+const fonts = [
+  'src/assets/fonts/Menlo-Regular.woff'
+];
 
 
 // -----[ IP Address ]----------------------------------------------------------

@@ -43,6 +43,9 @@
     let vehicleLayer = g.append('g')
       .classed('vehicle-layer', true);
 
+    let routeLayer = g.append('g')
+      .classed('route-layer', true);
+
     function nameFn(d){
       return d && d.properties ? d.properties.neighborho : null;
     }
@@ -126,13 +129,18 @@
       });
     };
 
-    this.initVehicles = function(vehicles) {
+    this.initVehicles = function(vehicles, $scope) {
       vehicleLayer.selectAll(".vehicle")
         .data(vehicles, d => d ? d.id : null)
         .enter().append("circle", ".vehicle")
         .attr("r", 2.5)
         .attr("class", "vehicle")
         .attr("vehicle-id", d => d ? d.id : null)
+        .attr("data-ng-click", "map.selectVehicle('test')")
+        .on('click', d => {
+          $scope.map.selectVehicle(d);
+          $scope.$apply();
+        })
         .attr("transform", d => d ?
           "translate(" + projection([
             parseFloat(d.lon),

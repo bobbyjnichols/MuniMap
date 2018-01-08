@@ -1,38 +1,19 @@
-body
+@font-face
+  font-family: 'Menlo Regular'
+  font-style: normal
+  font-weight: normal
+  src: local('Menlo Regular'), url('Menlo-Regular.woff') format('woff')
+
+body, html
   background-color: #002b36
   width: 100vw
   height: 100vh
   margin: 0
+  overflow: hidden
+  font-family: "Menlo Regular", monospace
 
-.main-canvas
-
-  .background
-    fill: #002b36
-    pointer-events: all
-
-
-  .map-layer
-    fill: #fff
-    stroke: #657b83
-
-    .neighborhood
-      fill: #073642
-      &:hover
-        fill: #b58900
-
-  text
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
-    font-weight: 300
-
-
-  text.big-text
-    font-size: 30px
-    font-weight: 400
-
-  .vehicle-layer
-    .vehicle
-      fill: #d33682
-      transition: 0.25s ease-in-out r, 10s transform
-      &:hover
-        r: 5
+  [ui-view]
+    width: 100%
+    height: 100%
+    overflow: hidden
 
