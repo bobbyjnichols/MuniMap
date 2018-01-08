@@ -1,8 +1,15 @@
 (function () {
   'use strict';
 
-  const MapController = function (MapService, d3RenderService) {
+  const MapController = function (MapService, d3RenderService, $interval) {
+    let self = this;
 
+    this.updateVehicles = function () {
+      console.log("Update");
+      MapService.getVehicles(self.routes).then(vehicles => {
+        d3RenderService.updateVehicles(vehicles);
+      });
+    };
 
     this.$onInit = function () {
       d3RenderService.initMap();
@@ -13,6 +20,7 @@
           d3RenderService.initVehicles(vehicles);
         });
       });
+      $interval(self.updateVehicles, 10000);
     };
   };
 
@@ -34,6 +42,7 @@
     .controller('MapController', [
       'MapService',
       'd3RenderService',
+      '$interval',
       MapController
     ]);
 })();

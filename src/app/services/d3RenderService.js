@@ -128,11 +128,22 @@
 
     this.initVehicles = function(vehicles) {
       vehicleLayer.selectAll(".vehicle")
-        .data(vehicles)
+        .data(vehicles, d => d ? d.id : null)
         .enter().append("circle", ".vehicle")
         .attr("r", 2.5)
         .attr("class", "vehicle")
         .attr("vehicle-id", d => d ? d.id : null)
+        .attr("transform", d => d ?
+          "translate(" + projection([
+            parseFloat(d.lon),
+            parseFloat(d.lat)
+          ]) + ")" : null
+        );
+    };
+
+    this.updateVehicles = function (vehicles) {
+      vehicleLayer.selectAll(".vehicle")
+        .data(vehicles, d => d ? d.id : null)
         .attr("transform", d => d ?
           "translate(" + projection([
             parseFloat(d.lon),
