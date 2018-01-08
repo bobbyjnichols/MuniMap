@@ -14,6 +14,7 @@ const sequence = require('run-sequence');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
+const ngConstant = require('gulp-ng-constant');
 
 const sass = require('gulp-sass');
 const cssmin = require('gulp-cssmin');
@@ -30,6 +31,9 @@ const babel = require('gulp-babel');
 
 // -----[ Files ]---------------------------------------------------------------
 const js = [
+  'node_modules/angular/angular.js',
+  'node_modules/angular-resource/angular-resource.js',
+  'node_modules/@uirouter/angularjs/release/angular-ui-router.js'
   // 'node_modules/d3/build/d3.js',
   // 'node_modules/d3-array/build/d3-array.js',
   // 'node_modules/d3-axis/build/d3-axis.js',
@@ -89,6 +93,22 @@ Object.keys(ifaces).forEach(function (ifname) {
 
 // -----[ JSON Files ]----------------------------------------------------------
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+
+// -----[ Constants ]-----------------------------------------------------------
+const constDebug = {
+  version: 'v' + pkg.version,
+  baseUrl: 'http://localhost:9019',
+  apiServer: 'http://' + (ipAddress || '127.0.0.1') + ':8081',
+  debug: true,
+  get resourceUrlWhitelist() {
+    return [
+      'self',
+      'http://webservices.nextbus.com/service/**',
+      this.apiServer + '/**',
+      this.baseUrl + '/**',
+    ];
+  }
+};
 
 // -----[ Options ]-------------------------------------------------------------
 const knownOptions = {
@@ -304,6 +324,7 @@ gulp.task('clean', ['clean:debug', 'clean:target']);
 
 gulp.task('debug', function (callback) {
   sequence(
+    'constants:debug',
     ['index', 'scripts', 'style', 'fonts', 'copy:assets', 'html'],
     'connect',
     'watch',

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" ng-app="MuniMap">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,7 +17,7 @@
   <p>To preform all our magic, MuniMap requires a browser with Javascript supported and enabled. Make sure Javascript is enabled and then try reloading this page.</p>
 </noscript>
 
-<svg class="main-canvas"></svg>
+<div ui-view></div>
 
 <!-- Application Scripts -->
 <script src="https://d3js.org/d3.v3.min.js"></script>
