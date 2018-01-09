@@ -1,12 +1,10 @@
 (function () {
   'use strict';
 
-  const WebService = function ($resource, $rootScope, $timeout, ConStore, $q, $cacheFactory) {
+  const WebService = function ($resource, ConStore, $cacheFactory) {
     let APIManager = {};
 
-    // A generic utility method for processing all Network config parameters.
     APIManager.computeConfigArgs = function (networkConfig) {
-      // override the arguments with its default values when it goes undefined
       networkConfig.url = angular.isDefined(networkConfig.url) ? networkConfig.url : "";
       networkConfig.params = angular.isDefined(networkConfig.params) ? networkConfig.params : {};
       networkConfig.data = angular.isDefined(networkConfig.data) ? networkConfig.data : undefined;
@@ -15,11 +13,10 @@
       return networkConfig;
     };
 
-    // All GET request which returns an object is pipelined to @doGet method
     APIManager.get = function (networkConfig) {
       networkConfig = APIManager.computeConfigArgs(networkConfig);
-      var actualURL = networkConfig.url.startsWith('http') ? networkConfig.url : ConStore.apiServer + '/' + networkConfig.url;
-      var resourceObject = $resource(actualURL, networkConfig.params, {
+      let actualURL = networkConfig.url.startsWith('http') ? networkConfig.url : ConStore.apiServer + '/' + networkConfig.url;
+      let resourceObject = $resource(actualURL, networkConfig.params, {
         get: {
           method: 'GET',
           params: networkConfig.params,
@@ -33,12 +30,11 @@
       return resourceObject.get().$promise;
     };
 
-    // All GET request which returns an array is pipelined to @doGetAll method
     APIManager.getArray = function (networkConfig) {
 
       networkConfig = APIManager.computeConfigArgs(networkConfig);
-      var actualURL = networkConfig.url.startsWith('http') ? networkConfig.url : ConStore.apiServer + '/' + networkConfig.url;
-      var resourceObject = $resource(actualURL, networkConfig.params, {
+      let actualURL = networkConfig.url.startsWith('http') ? networkConfig.url : ConStore.apiServer + '/' + networkConfig.url;
+      let resourceObject = $resource(actualURL, networkConfig.params, {
         query: {
           method: 'GET',
           params: networkConfig.params,
@@ -60,7 +56,6 @@
         $cacheFactory.get('$http').remove(url);
     };
 
-
     return APIManager;
   };
 
@@ -68,10 +63,7 @@
     .module("MuniMap")
     .factory("WebService", [
       '$resource',
-      '$rootScope',
-      '$timeout',
       'ConStore',
-      '$q',
       '$cacheFactory',
       WebService
     ]);
