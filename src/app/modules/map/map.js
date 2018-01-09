@@ -17,9 +17,11 @@
       console.log("Update");
       MapService.getVehicles(self.routes).then(vehicles => {
         vehicles.forEach(vehicle => {
-          vehicle ? Object.assign(self.vehicles.find(vFind =>
-            vFind ? vFind.id === vehicle.id : false), vehicle
-          ) : null
+          if (vehicle) {
+            let foundVehicle = self.vehicles.find(vFind => vFind ? vFind.id === vehicle.id : false);
+            if (foundVehicle)
+              Object.assign(foundVehicle, vehicle);
+          }
         });
         d3RenderService.updateVehicles(self.vehicles, $scope);
       });

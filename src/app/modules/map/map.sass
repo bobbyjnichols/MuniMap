@@ -131,6 +131,7 @@ $sidebarWidth: 300pt
   overflow: hidden
   display: flex
   flex-direction: column
+  color: $base0
 
   &.open
     width: $sidebarWidth
@@ -139,8 +140,14 @@ $sidebarWidth: 300pt
     width: calc(#{$sidebarWidth} - 2em)
     padding: 1em
 
+  h3
+    font-size: 2.5em
+    padding: 0 1em 0.5em 1em
+    margin: 0
+
   .routes
     list-style: none
     height: 100%
     overflow: scroll
+    width: $sidebarWidth
 
