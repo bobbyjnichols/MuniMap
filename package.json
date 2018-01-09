@@ -43,6 +43,6 @@
     "angular": "^1.6.8",
     "angular-animate": "^1.6.8",
     "angular-resource": "^1.6.8",
-    "d3": "^4.12.2"
+    "d3": "^3.0.0"
   }
 }
