@@ -11,7 +11,7 @@ Click the currently selected neighborhood to return to the full map.
 
 ### Requirements
 This README assumes your machine has the Gulp task runner installed globally. 
-If this is not the case you can do so by running `npm install -g gulp` or `yarn add global gulp`.
+If this is not the case you can do so by running `npm install -g gulp` or `yarn global add gulp`.
 
 ### Setup
 Yarn is the preferred package manager for MuniMap. 
