@@ -1,6 +1,9 @@
-<div>
+<div class="sidebar" ng-class="{'open': isSidebarOpen}">
+  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Muni_worm_logo.svg/1200px-Muni_worm_logo.svg.png">
+</div>
+<div class="main-container" ng-class="{'shifted': isSidebarOpen}">
   <svg class="main-canvas"></svg>
-  <div class="more-info" ng-if="selectedVehicle">
+  <div class="more-info" ng-if="selectedVehicle && !isSidebarOpen">
     <h1>{{selectedRoute.title}}</h1>
     <ul>
       <li>Vehicle: {{selectedVehicle.id}}</li>

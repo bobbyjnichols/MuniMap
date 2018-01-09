@@ -1,8 +1,8 @@
-.hamburger-component
-  width: 60px
-  height: 45px
+.hamburger-directive
+  width: 3em
+  height: 3em
   position: relative
-  margin: 50px auto
+  margin: 1em 0 0 1em
   transform: rotate(0deg)
   transition: .5s ease-in-out
   cursor: pointer
@@ -10,21 +10,20 @@
   span
     display: block
     position: absolute
-    height: 9px
+    height: 0.5em
     width: 100%
-    background: #d3531a
-    border-radius: 9px
+    background: $base01
     opacity: 1
     left: 0
     transform: rotate(0deg)
     transition: .25s ease-in-out
 
     &:nth-child(1)
-      top: 0px
+      top: 0
     &:nth-child(2), &:nth-child(3)
-      top: 18px
+      top: 1em
     &:nth-child(4)
-      top: 36px
+      top: 2em
 
   &.open span
     &:nth-child(1)

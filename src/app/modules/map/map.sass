@@ -1,105 +1,139 @@
-.main-canvas
+$sidebarWidth: 300pt
+
+.main-container
+  width: 100%
+  height: 100%
   position: absolute
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
-  z-index: 0
+  top: 0
+  left: 0
+  transition: 0.5s ease-in-out left
+  will-change: left
 
-  .background
-    fill: $base03
-    pointer-events: all
+  &.shifted
+    left: $sidebarWidth
+
+  .main-canvas
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    z-index: 0
+
+    .background
+      fill: $base03
+      pointer-events: all
 
 
-  .map-layer
-    stroke: $base00
+    .map-layer
+      stroke: $base00
 
-    .neighborhood
-      fill: $base02
-      transition: 0.1s fill
+      .neighborhood
+        fill: $base02
+        transition: 0.1s fill
 
-      &:hover
-        fill: $yellow
+        &:hover
+          fill: $yellow
 
-      & + .selected
-        fill: lighten($base02, 5%)
+        & + .selected
+          fill: lighten($base02, 5%)
 
-  .vehicle-layer
-    .vehicle
-      fill: $magenta
-      transition: 0.25s ease-in-out r, 10s transform
-      cursor: pointer
-      stroke: $magenta
-      stroke-width: inherit
-      stroke-opacity: inherit
-
-      @keyframes pulse
-        from
-          r: 3
-          stroke-opacity: 1
-
-        to
-          r: 5
-          stroke-opacity: 0
-
-      &:hover
-        r: 5
-
-      &+.selected
-        animation-duration: 1s
-        animation-name: pulse
-        animation-iteration-count: infinite
+    .vehicle-layer
+      .vehicle
+        fill: $magenta
+        transition: 0.25s ease-in-out r, 10s transform
+        cursor: pointer
         stroke: $magenta
-        stroke-width: 2px
+        stroke-width: inherit
+        stroke-opacity: inherit
 
-  .freeway, .artery, .street
-    fill: none
-    pointer-events: none
+        @keyframes pulse
+          from
+            r: 3
+            stroke-opacity: 1
 
-  .freeway
-    stroke-width: 1.5
-    stroke: $yellow
+          to
+            r: 5
+            stroke-opacity: 0
 
-  .artery
-    stroke-width: 1
-    stroke: $yellow
+        &:hover
+          r: 5
 
-  .street
-    stroke-width: 0.5
-    stroke: $base01
+        &+.selected
+          animation-duration: 1s
+          animation-name: pulse
+          animation-iteration-count: infinite
+          stroke: $magenta
+          stroke-width: 2px
 
-.more-info
+    .freeway, .artery, .street
+      fill: none
+      pointer-events: none
+
+    .freeway
+      stroke-width: 1.5
+      stroke: $yellow
+
+    .artery
+      stroke-width: 1
+      stroke: $yellow
+
+    .street
+      stroke-width: 0.5
+      stroke: $base01
+
+  .more-info
+    position: absolute
+    top: 2rem
+    right: 2rem
+    z-index: 5
+    background: $base2
+    border: 0.2em solid darken($base2, 25%)
+    color: $base00
+    padding: 1em
+    max-width: calc(100% - 6rem)
+    overflow: hidden
+    transition: 0.5s all
+
+    > *:not(:last-child)
+      margin-bottom: 1rem
+
+    h1
+      color: $base01
+      margin: 0
+      padding: 0
+
+    ul
+      margin: 0
+      padding: 0 0 0 1em
+
+      .heading-icon
+        width: 1em
+        fill: $base00
+
+    &.ng-enter, &.ng-leave.ng-leave-active
+      transform: translateY(-50%)
+      opacity: 0
+
+    &.ng-leave, &.ng-enter.ng-enter-active
+      transform: translateY(0)
+      opacity: 1
+
+.sidebar
   position: absolute
-  top: 2rem
-  right: 2rem
+  width: 0
+  height: 100vh
+  top: 0
+  left: 0
   z-index: 5
-  background: $base2
-  border: 0.2em solid darken($base2, 25%)
-  color: $base00
-  padding: 1em
-  max-width: calc(100% - 6rem)
+  background: $base02
+  transition: 0.5s ease-in-out width
+  will-change: width
   overflow: hidden
-  transition: 0.5s all
 
-  > *:not(:last-child)
-    margin-bottom: 1rem
+  &.open
+    width: $sidebarWidth
 
-  h1
-    color: $base01
-    margin: 0
-    padding: 0
+  .logo
+    width: calc(#{$sidebarWidth} - 2em)
+    padding: 1em
 
-  ul
-    margin: 0
-    padding: 0 0 0 1em
-
-    .heading-icon
-      width: 1em
-      fill: $base00
-
-  &.ng-enter, &.ng-leave.ng-leave-active
-    transform: translateY(-50%)
-    opacity: 0
-
-  &.ng-leave, &.ng-enter.ng-enter-active
-    transform: translateY(0)
-    opacity: 1
