@@ -99,7 +99,10 @@
 
     this.updateVehicles = function (vehicles, $scope) {
       let data = self.layers.vehicle.selectAll(".vehicle")
-        .data(vehicles, d => d ? d.id : null);
+        .data(
+          vehicles.filter(vehicle => vehicle ? vehicle.enabled : false),
+          d => d ? d.id : null
+        );
 
       data.exit().remove();
 

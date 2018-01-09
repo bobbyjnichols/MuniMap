@@ -129,6 +129,8 @@ $sidebarWidth: 300pt
   transition: 0.5s ease-in-out width
   will-change: width
   overflow: hidden
+  display: flex
+  flex-direction: column
 
   &.open
     width: $sidebarWidth
@@ -136,4 +138,9 @@ $sidebarWidth: 300pt
   .logo
     width: calc(#{$sidebarWidth} - 2em)
     padding: 1em
+
+  .routes
+    list-style: none
+    height: 100%
+    overflow: scroll
 

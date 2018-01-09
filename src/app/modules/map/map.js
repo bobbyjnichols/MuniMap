@@ -16,15 +16,48 @@
     this.updateVehicles = function () {
       console.log("Update");
       MapService.getVehicles(self.routes).then(vehicles => {
-        d3RenderService.updateVehicles(vehicles, $scope);
+        vehicles.forEach(vehicle => {
+          vehicle ? Object.assign(self.vehicles.find(vFind =>
+            vFind ? vFind.id === vehicle.id : false), vehicle
+          ) : null
+        });
+        d3RenderService.updateVehicles(self.vehicles, $scope);
       });
+    };
+
+    this.toggleAllRoutes = function () {
+      // Finds average 'enabled' state of routes
+      const enabled = (self.routes
+        .map(route => route.enabled ? 1 : 0)
+        .reduce((a, b) => a + b) / self.routes.length) >= 0.5;
+
+      self.routes.forEach(route => {
+        route.enabled = !enabled;
+      });
+      if (self.vehicles) {
+        self.vehicles.forEach(vehicle => {
+          if (vehicle)
+            vehicle.enabled = !enabled;
+        });
+        d3RenderService.updateVehicles(self.vehicles, $scope);
+      }
+    };
+
+    this.toggleRoute = function (route) {
+      self.vehicles.forEach(vehicle => {
+        if (vehicle && vehicle.routeTag === route.tag)
+          vehicle.enabled = route.enabled;
+      });
+      d3RenderService.updateVehicles(self.vehicles, $scope);
     };
 
     this.$onInit = function () {
       d3RenderService.initMap();
       MapService.getRoutes().then(routes => {
         self.routes = routes;
+        self.toggleAllRoutes();
         MapService.getVehicles(self.routes).then(vehicles => {
+          vehicles.forEach(vehicle => vehicle ? vehicle.enabled = true : null);
           self.vehicles = vehicles;
           d3RenderService.updateVehicles(vehicles, $scope);
         });

@@ -1,7 +1,16 @@
 <div class="sidebar" ng-class="{'open': isSidebarOpen}">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Muni_worm_logo.svg/1200px-Muni_worm_logo.svg.png">
+  <h3>Routes</h3>
+  <ul class="routes">
+    <li ng-repeat="route in map.routes track by route.tag">
+      <input type="checkbox" ng-model="route.enabled" ng-click="map.toggleRoute(route)">
+      {{route.title}}
+    </li>
+  </ul>
 </div>
-<div class="main-container" ng-class="{'shifted': isSidebarOpen}">
+<div class="main-container"
+     ng-class="{'shifted': isSidebarOpen}"
+     ng-click="isSidebarOpen=false">
   <svg class="main-canvas"></svg>
   <div class="more-info" ng-if="selectedVehicle && !isSidebarOpen">
     <h1>{{selectedRoute.title}}</h1>
