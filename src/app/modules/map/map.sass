@@ -70,12 +70,13 @@
 .more-info
   position: absolute
   top: 2rem
-  left: 2rem
+  right: 2rem
   z-index: 5
   background: $base2
   border: 0.2em solid darken($base2, 25%)
   color: $base00
   padding: 1em
+  max-width: calc(100% - 6rem)
   overflow: hidden
   transition: 0.5s all
 
@@ -98,7 +99,6 @@
   &.ng-enter, &.ng-leave.ng-leave-active
     transform: translateY(-50%)
     opacity: 0
-
 
   &.ng-leave, &.ng-enter.ng-enter-active
     transform: translateY(0)
