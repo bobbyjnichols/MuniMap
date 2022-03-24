@@ -30,7 +30,7 @@
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "merge-stream": "^1.0.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "postcss-flexbugs-fixes": "^3.2.0",
     "run-sequence": "^1.2.1",
     "streamqueue": "^1.1.2"
